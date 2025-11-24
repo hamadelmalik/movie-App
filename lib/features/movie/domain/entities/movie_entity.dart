@@ -4,7 +4,7 @@ class MovieEntity {
   final int id;
   final String title;
   final int year;
-  final int rating;
+  final double rating;
   final List<String> genres; // <-- هنا
   final String descriptionFull;
   final String mediumCoverImage;

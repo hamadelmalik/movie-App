@@ -1,54 +1,66 @@
-import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movie/domain/entities/subentities/torrent_entity.dart';
 
-class MovieModel extends MovieEntity {
-  // Extra fields specific to MovieModel
+class TorrentModel extends TorrentEntity {
   final String url;
-  final String imdbCode;
-  final String titleEnglish;
-  final String titleLong;
-  final String slug;
-  final int runtime;
-  final int likeCount;
-  final String descriptionIntro;
-  final String ytTrailerCode;
-  final String language;
-  final String mpaRating;
-  final String backgroundImage;
-  final String backgroundImageOriginal;
-  final String smallCoverImage;
-  final String largeCoverImage;
+  final String hash;
+  final String videoCodec;
+  final String bitDepth;
+  final String audioChannels;
+  final int sizeBytes;
   final String dateUploaded;
   final int dateUploadedUnix;
-  MovieModel({
-    // inherited fields from MovieEntity
-    required super.id,
-    required super.title,
-    required super.year,
-    required super.rating,
-    required super.genres,
-    required super.descriptionFull,
-    required super.mediumCoverImage,
-    required super.torrent,
 
-    // new fields for MovieModel
+  TorrentModel({
+    required super.quality,
+    required super.type,
+    required super.size,
+    required super.seeds,
+    required super.peers,
     required this.url,
-    required this.imdbCode,
-    required this.titleEnglish,
-    required this.titleLong,
-    required this.slug,
-    required this.runtime,
-    required this.likeCount,
-    required this.descriptionIntro,
-    required this.ytTrailerCode,
-    required this.language,
-    required this.mpaRating,
-    required this.backgroundImage,
-    required this.backgroundImageOriginal,
-    required this.smallCoverImage,
-    required this.largeCoverImage,
+    required this.hash,
+    required this.videoCodec,
+    required this.bitDepth,
+    required this.audioChannels,
+    required this.sizeBytes,
     required this.dateUploaded,
     required this.dateUploadedUnix,
   });
 
-  // Factory constructor to parse JSON
+  /////////////fromJson/////////////////////
+  factory TorrentModel.fromJson(Map<String, dynamic> json) {
+    return TorrentModel(
+      quality: json['quality'],
+      type: json['type'],
+      size: json['size'],
+      seeds: json['seeds'],
+      peers: json['peers'],
+      url: json['url'],
+      hash: json['hash'],
+      videoCodec: json['video_codec'],
+      bitDepth: json['bit_depth'],
+      audioChannels: json['audio_channels'],
+      sizeBytes: json['size_bytes'],
+      dateUploaded: json['date_uploaded'],
+      dateUploadedUnix: json['date_uploaded_unix'],
+    );
+  }
+
+  //////////toJson///////////////////////////
+  Map<String, dynamic> toJson() {
+    return {
+      'quality': quality,
+      'type': type,
+      'size': size,
+      'seeds': seeds,
+      'peers': peers,
+      'url': url,
+      'hash': hash,
+      'video_codec': videoCodec,
+      'bit_depth': bitDepth,
+      'audio_channels': audioChannels,
+      'size_bytes': sizeBytes,
+      'date_uploaded': dateUploaded,
+      'date_uploaded_unix': dateUploadedUnix,
+    };
+  }
 }
