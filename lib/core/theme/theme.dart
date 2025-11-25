@@ -13,5 +13,10 @@ class AppTheme {
       enabledBorder: _border(),
       focusedBorder: _border(color:AppPalette.gradient2),
     ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: AppPalette.gradient2,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
+    ),
   );
 }

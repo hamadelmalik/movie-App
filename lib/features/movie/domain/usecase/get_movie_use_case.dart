@@ -7,12 +7,11 @@ import 'package:movie_app/core/params/params.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/domain/repositories/movie_repositories.dart';
 
-class MovieUseCase {
-  final MovieRepositories repositories;
+class MovieDetailsUseCase {
+  final MovieDetailsRepositories repositories;
+  MovieDetailsUseCase({required this.repositories});
 
-  MovieUseCase(this.repositories);
-
-  Future<Either<Failure, MovieEntity>> call({ required MovieParams params}) {
-    return repositories.getMovies(params: params);
+  Future<Either<Failure, MovieDetailsEntity>> call({ required MovieDetailsParams params}) {
+    return repositories.getMovieDetails(params: params);
   }
 }

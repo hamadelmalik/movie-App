@@ -1,5 +1,5 @@
-class MovieParams {
-  final String id;
+class MovieDetailsParams {
+  final int id;
 
-  MovieParams({required this.id});
+  MovieDetailsParams({required this.id});
 }

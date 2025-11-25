@@ -1,5 +1,3 @@
-//1 check internet////
-//2 response  model from datasource
 
 import 'package:dartz/dartz.dart';
 import 'package:movie_app/core/connection/network_info.dart';
@@ -10,17 +8,17 @@ import 'package:movie_app/features/movie/data/datasource/model_remote_data_sourc
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/domain/repositories/movie_repositories.dart';
 
-class MovieRepositoryImpl extends MovieRepositories {
+class MovieDetailsRepositoryImpl extends MovieDetailsRepositories {
   final NetworkInfo networkInfo;
-  final MovieRemoteDataSource remoteDataSource;
+  final MovieDetailsRemoteDataSource remoteDataSource;
 
-  MovieRepositoryImpl(this.networkInfo, this.remoteDataSource);
+  MovieDetailsRepositoryImpl({required this.networkInfo, required this.remoteDataSource });
 
   @override
-  Future<Either<Failure, MovieEntity>> getMovies({required MovieParams params}) async {
+  Future<Either<Failure, MovieDetailsEntity>> getMovieDetails({required MovieDetailsParams params}) async {
     try {
       if (await networkInfo.isConnected) {
-        final remoteMovie = await remoteDataSource.getMovie(params);
+        final remoteMovie = await remoteDataSource.getMovieDetails(params);
         return Right(remoteMovie);
       } else {
         // لو مش متصل بالإنترنت

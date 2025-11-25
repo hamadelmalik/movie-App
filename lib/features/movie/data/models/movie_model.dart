@@ -1,7 +1,6 @@
-import 'package:movie_app/features/movie/data/models/submodel/genre_model.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 
-class MovieModel extends MovieEntity {
+class MovieDetailsModel extends MovieDetailsEntity {
   final String? homepage;
   final int? budget;
   final int? revenue;
@@ -9,13 +8,14 @@ class MovieModel extends MovieEntity {
   final String? originalLanguage;
   final String? originalTitle;
   final bool? video;
-  MovieModel({
+  MovieDetailsModel({
     required super.id,
     required super.title,
     required super.overview,
     required super.releaseDate,
     required super.runtime,
     required super.genres,
+    required super.posterPath,
     this.homepage,
     this.budget,
     this.revenue,
@@ -25,14 +25,17 @@ class MovieModel extends MovieEntity {
     this.video,
   });
 
-  factory MovieModel.fromJson(Map<String, dynamic> json) {
-    return MovieModel(
+  factory MovieDetailsModel.fromJson(Map<String, dynamic> json) {
+    return MovieDetailsModel(
       id: json["id"] ?? 0,
       title: json["title"] ?? json["original_title"] ?? "",
       overview: json["overview"] ?? "",
       releaseDate: json["release_date"] ?? "",
       runtime: json["runtime"] ?? 0,
-      genres: GenreModel.fromJson( json["name"] ),
+      genres: (json["genres"] as List<dynamic>?)
+          ?.map((e) => e["name"] as String)
+          .toList() ??
+          [],
       homepage: json["homepage"],
       budget: json["budget"],
       revenue: json["revenue"],
@@ -40,8 +43,10 @@ class MovieModel extends MovieEntity {
       originalLanguage: json["original_language"],
       originalTitle: json["original_title"],
       video: json["video"],
+      posterPath: json["poster_path"] ?? "",
     );
   }
+
 
 }
 

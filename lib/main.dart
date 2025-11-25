@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/route/app_route.dart';
+import 'package:movie_app/core/route/page_route_name.dart';
 import 'package:movie_app/core/theme/theme.dart';
-//import 'package:movie_app/features/auth/presentation/pages/sign_in_page.dart';
-//import 'package:movie_app/features/auth/presentation/pages/sign_up_page.dart';
-import 'package:movie_app/features/movie/presentation/splash/splash_screen.dart';
-//import 'features/auth/presentation/pages/sign_in_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,8 +18,8 @@ class MyApp extends StatelessWidget {
       title: 'Movies App',
       theme: AppTheme.darkThemeMode,
 
-      home:  SplashScreen(),
+      initialRoute: PageRouteName.layoutView,
+      onGenerateRoute: AppRoute.onGenerateRoute,
     );
   }
 }
-

@@ -3,6 +3,6 @@ import 'package:movie_app/core/errors/failure.dart';
 import 'package:movie_app/core/params/params.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 
-abstract class MovieRepositories {
-  Future<Either<Failure, MovieEntity>> getMovies({required MovieParams params});
+abstract class MovieDetailsRepositories {
+  Future<Either<Failure, MovieDetailsEntity>> getMovieDetails({required MovieDetailsParams params});
 }

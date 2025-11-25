@@ -1,19 +1,19 @@
-import 'package:movie_app/features/movie/domain/entities/subentity/genre_entity.dart';
-
-class MovieEntity {
+class MovieDetailsEntity {
   final int id;
   final String title;
   final String overview;
   final String releaseDate;
   final int runtime;
-  final GenreEntity genres;
+  final List<String> genres;
+  final String posterPath;
 
-  MovieEntity({
+  MovieDetailsEntity({
     required this.id,
     required this.title,
     required this.overview,
     required this.releaseDate,
     required this.runtime,
     required this.genres,
+    required this.posterPath,
   });
 }
