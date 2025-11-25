@@ -1,26 +1,19 @@
-import 'package:movie_app/features/movie/domain/entities/subentities/torrent_entity.dart';
+import 'package:movie_app/features/movie/domain/entities/subentity/genre_entity.dart';
 
 class MovieEntity {
   final int id;
   final String title;
-  final int year;
-  final double rating;
-  final List<String> genres; // <-- هنا
-  final String descriptionFull;
-  final String mediumCoverImage;
-  final TorrentEntity torrent;
+  final String overview;
+  final String releaseDate;
+  final int runtime;
+  final GenreEntity genres;
 
-  const MovieEntity({
+  MovieEntity({
     required this.id,
     required this.title,
-    required this.year,
-    required this.rating,
-    required this.genres, // <-- نمرّرها من الـ Model
-    required this.descriptionFull,
-    required this.mediumCoverImage,
-    required this.torrent,
+    required this.overview,
+    required this.releaseDate,
+    required this.runtime,
+    required this.genres,
   });
 }
-
-// domain/entities/torrent_entity.dart
-
