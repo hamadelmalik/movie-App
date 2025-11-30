@@ -35,7 +35,7 @@ class HomeView extends StatelessWidget {
                   width: screenWidth * 0.6, height: 361, fit: BoxFit.cover),
             ),
             const SizedBox(height: 16),
-            Image.asset(AppAssets.watch, width: screenWidth * 0.7),
+            Image.asset(AppAssets.w, width: screenWidth * 0.7),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
