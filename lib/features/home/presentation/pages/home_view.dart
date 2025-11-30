@@ -31,7 +31,7 @@ class HomeView extends StatelessWidget {
             const SizedBox(height: 16),
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(AppAssets.a1917,
+              child: Image.asset(AppAssets.timeIsEnemy,
                   width: screenWidth * 0.6, height: 361, fit: BoxFit.cover),
             ),
             const SizedBox(height: 16),
@@ -46,7 +46,7 @@ class HomeView extends StatelessWidget {
                   onPressed: () {},
                   child: Text("See More",
                       style: TextStyle(
-                          color: AppPalette.gradient3, fontSize: 22)),
+                          color: AppPalette.gradient2, fontSize: 22)),
                 ),
               ],
             ),
