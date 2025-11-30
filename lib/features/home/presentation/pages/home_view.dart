@@ -2,13 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/theme/app_palette.dart';
 import 'package:movie_app/features/home/domain/entity/action_entity.dart';
+import 'package:movie_app/features/home/domain/entity/trending_entity.dart';
+import 'package:movie_app/features/home/presentation/pages/widgets/action_movies_card.dart';
+import 'package:movie_app/features/home/presentation/pages/widgets/available_movie_card.dart';
 
-class HomeView extends StatelessWidget {
-   HomeView({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  List<TrendingMovieEntity> availableMovie = [
+    TrendingMovieEntity(
+      id: 1,
+      title: "Captain America",
+      posterPath: 'assets/images/captain.jpg',
+      rating: 7.7,
+      releaseDate: "2011-07-22",
+    ),
+    TrendingMovieEntity(
+      id: 2,
+      title: "Black Panther",
+      posterPath: 'assets/images/black.png',
+      rating: 8.3,
+      releaseDate: "2018-02-16",
+    ),
+    TrendingMovieEntity(
+      id: 2,
+      title: "The Dark",
+      posterPath: 'assets/images/dark.png',
+      rating: 8.3,
+      releaseDate: "2018-02-16",
+    ),
+  ];
+
   final List<ActionMovieEntity> actionMovies = [
-    ActionMovieEntity(title: 'Captain America', assetPath: AppAssets.captain, rating: 7.7),
+    ActionMovieEntity(
+      title: 'Captain America',
+      assetPath: AppAssets.captain,
+      rating: 7.7,
+    ),
     ActionMovieEntity(title: 'black', assetPath: AppAssets.black, rating: 8.3),
-    ActionMovieEntity(title: 'The Dark ', assetPath: AppAssets.dark, rating: 6.3),
+    ActionMovieEntity(
+      title: 'The Dark ',
+      assetPath: AppAssets.dark,
+      rating: 6.3,
+    ),
 
     // Add more movies here
   ];
@@ -27,26 +68,39 @@ class HomeView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(AppAssets.available, width: screenWidth * 0.7),
+            Image.asset(AppAssets.Available, width: screenWidth * 0.7),
+
             const SizedBox(height: 16),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(AppAssets.timeIsEnemy,
-                  width: screenWidth * 0.6, height: 361, fit: BoxFit.cover),
+            SizedBox(
+              height: 351,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return AvailableMovieCard(
+                    trendingMovieEntity: availableMovie[index],
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(width: 10);
+                },
+                itemCount: availableMovie.length,
+              ),
             ),
-            const SizedBox(height: 16),
-            Image.asset(AppAssets.w, width: screenWidth * 0.7),
-            const SizedBox(height: 16),
+            //  Image.asset(AppAssets.watch, width: screenWidth * 0.7),
+            SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Action",
-                    style: TextStyle(color: Colors.white, fontSize: 22)),
+                const Text(
+                  "Action",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
                 TextButton(
                   onPressed: () {},
-                  child: Text("See More",
-                      style: TextStyle(
-                          color: AppPalette.gradient2, fontSize: 22)),
+                  child: Text(
+                    "See More",
+                    style: TextStyle(color: AppPalette.gradient2, fontSize: 22),
+                  ),
                 ),
               ],
             ),
@@ -54,52 +108,15 @@ class HomeView extends StatelessWidget {
             SizedBox(
               height: 220, // ارتفاع ثابت علشان البوسترات
               child: ListView.builder(
-                scrollDirection: Axis.horizontal,   // هنا التغيير الأساسي
+                scrollDirection: Axis.horizontal, // هنا التغيير الأساسي
                 itemCount: actionMovies.length,
                 itemBuilder: (context, index) {
-                  final movie = actionMovies[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            movie.assetPath,
-                            width: 150,
-                            height: 200,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                          top: 8,
-                          right: 8,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: Colors.black45,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  movie.rating.toString(),
-                                  style: const TextStyle(color: Colors.white, fontSize: 22),
-                                ),
-                                const SizedBox(width: 4),
-                                const Icon(Icons.star, color: Colors.yellow, size: 30),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  return ActionMoviesCard(
+                    actionMovieEntity: actionMovies[index],
                   );
                 },
               ),
             ),
-
           ],
         ),
       ),

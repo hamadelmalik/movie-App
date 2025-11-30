@@ -36,7 +36,6 @@ class _LayoutViewState extends State<LayoutView> {
       currentIndex: _currentIndex,
       items: [
         BottomNavigationBarItem(
-
           icon: Image.asset(AppAssets.home, width: 25),
           activeIcon: Image.asset(AppAssets.homeActive, width: 25),
           label: "home",
