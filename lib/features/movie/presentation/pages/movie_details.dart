@@ -25,12 +25,15 @@ class MovieDetails extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
+        child:BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
           builder: (context, state) {
-            if (state is MovieDetailsLoaded) {
+
+            // Loading
+            if (state is MovieDetailsLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-        
+
+            // Error
             if (state is MovieDetailsFailure) {
               return Center(
                 child: Text(
@@ -39,17 +42,16 @@ class MovieDetails extends StatelessWidget {
                 ),
               );
             }
-        
+
+            // Success
             if (state is MovieDetailsLoaded) {
               final movie = state.movieDetails;
-        
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-        
                       /// Poster
                       Container(
                         height: 400,
@@ -65,37 +67,42 @@ class MovieDetails extends StatelessWidget {
                           ],
                         ),
                         child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                  child: Image.network(
-                    movie.posterPath.isNotEmpty
-                        ? "https://image.tmdb.org/t/p/w500${movie.posterPath}"
-                        : "https://via.placeholder.com/500x750?text=No+Image",
-                    width: double.infinity,
-                    height: 400,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Center(child: Icon(Icons.broken_image, size: 50));
-                    },
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return const Center(child: CircularProgressIndicator());
-                    },
-                  ),
-                ),
-        
-              ),
-        
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.network(
+                            movie.posterPath.isNotEmpty
+                                ? "https://image.tmdb.org/t/p/w500${movie.posterPath}"
+                                : "https://via.placeholder.com/500x750?text=No+Image",
+                            width: double.infinity,
+                            height: 400,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Center(
+                                child: Icon(Icons.broken_image, size: 50),
+                              );
+                            },
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+
                       const SizedBox(height: 16),
-        
+
                       /// Wrap for Likes, Time, Rating
                       Wrap(
                         spacing: 10,
                         runSpacing: 10,
                         children: [
-        
                           /// Likes
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
                             decoration: BoxDecoration(
                               color: AppPalette.gradient2,
                               borderRadius: BorderRadius.circular(20),
@@ -103,7 +110,11 @@ class MovieDetails extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(Icons.favorite, color: Colors.amber, size: 22),
+                                const Icon(
+                                  Icons.favorite,
+                                  color: Colors.amber,
+                                  size: 22,
+                                ),
                                 const SizedBox(width: 6),
                                 Text(
                                   movie.runtime.toString(),
@@ -116,10 +127,13 @@ class MovieDetails extends StatelessWidget {
                               ],
                             ),
                           ),
-        
+
                           /// Time
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
                             decoration: BoxDecoration(
                               color: AppPalette.gradient2,
                               borderRadius: BorderRadius.circular(20),
@@ -127,7 +141,11 @@ class MovieDetails extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: const [
-                                Icon(Icons.access_time, color: Colors.amber, size: 22),
+                                Icon(
+                                  Icons.access_time,
+                                  color: Colors.amber,
+                                  size: 22,
+                                ),
                                 SizedBox(width: 6),
                                 Text(
                                   "90",
@@ -140,10 +158,13 @@ class MovieDetails extends StatelessWidget {
                               ],
                             ),
                           ),
-        
+
                           /// Rating
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
                             decoration: BoxDecoration(
                               color: AppPalette.gradient2,
                               borderRadius: BorderRadius.circular(20),
@@ -151,7 +172,11 @@ class MovieDetails extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(Icons.star, color: Colors.amber, size: 22),
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 22,
+                                ),
                                 const SizedBox(width: 6),
                                 Text(
                                   movie.runtime.toString(),
@@ -166,32 +191,35 @@ class MovieDetails extends StatelessWidget {
                           ),
                         ],
                       ),
-        
+
                       const SizedBox(height: 20),
-        
+
                       /// Overview Title
                       const Text(
                         "Overview",
-                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-        
+
                       const SizedBox(height: 10),
-        
+
                       /// Overview Text
                       Text(
                         movie.overview,
                         style: const TextStyle(fontSize: 16),
                       ),
-        
+
                       const SizedBox(height: 10),
-        
+
                       CustomBottom(btnText: "watch"),
                     ],
                   ),
                 ),
               );
             }
-        
+
             return const SizedBox();
           },
         ),

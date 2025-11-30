@@ -2,8 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/constants/app_assets.dart';
 import 'package:movie_app/core/theme/app_palette.dart';
-import 'package:movie_app/features/movie/presentation/layout/layout_view.dart';
-import 'package:movie_app/features/movie/presentation/pages/sign_in_page.dart';
+import 'package:movie_app/features/home/presentation/layout/layout_view.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
