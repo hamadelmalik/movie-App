@@ -1,16 +1,25 @@
-# movies_app
+# 🎬 Movies App
 
-A new Flutter project.
+A Flutter application for browsing movies using the **TMDb API**, built with Clean Architecture principles.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
+- Display a list of available movies.
+- Multiple categories (Action, Drama, etc.).
+- Dynamic UI with **ListView.builder**.
+- Clear separation of layers (Domain, Data, Presentation).
+- Centralized asset management via `AppAssets`.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠️ Tech Stack
+- **Flutter/Dart** for UI development.
+- **Clean Architecture** for maintainability.
+- **Dependency Injection** for object management.
+- **TMDb API** as the data source.
+- **GitHub** for version control and collaboration.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 📂 Project Structure
