@@ -1,23 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/route/page_route_name.dart';
+import 'package:movie_app/core/services/service_locator.dart';
+import 'package:movie_app/features/home/presentation/cubit/trending_cubit.dart';
 import 'package:movie_app/features/home/presentation/layout/layout_view.dart';
-import 'package:movie_app/features/home/presentation/pages/home_view.dart';
 import 'package:movie_app/features/movie/presentation/splash/splash_screen.dart';
 
 class AppRoute {
   static Route<dynamic>? onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
       case PageRouteName.initial:
-        return MaterialPageRoute(builder: (context) => const SplashScreen(),settings: setting);
-      case PageRouteName.homeView:
-        return MaterialPageRoute(builder: (context) =>  HomeView(),settings: setting);
+        return MaterialPageRoute(
+          builder: (context) => const SplashScreen(),
+          settings: setting,
+        );
 
       case PageRouteName.layoutView:
-        return MaterialPageRoute(builder: (context) => const LayoutView(),settings: setting);
-
+        return MaterialPageRoute(
+          builder: (context) =>
+              BlocProvider(
+                create: (_) =>
+                sl<TrendingCubit>()
+                  ..fetchTrendingMovies(),
+                child: const LayoutView(),
+              ),
+          settings: setting,
+        );
 
       default:
-        return MaterialPageRoute(builder: (context) => const SplashScreen());
+        return MaterialPageRoute(
+          builder: (context) => const SplashScreen(),
+        );
     }
   }
 }

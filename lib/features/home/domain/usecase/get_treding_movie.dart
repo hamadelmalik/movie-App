@@ -6,13 +6,11 @@ import 'package:movie_app/features/home/domain/entity/trending_entity.dart';
 import 'package:movie_app/features/home/domain/repositories/trending_movie_repositories.dart';
 
 class GetTrendingMovieUseCase {
-  final TrendingMovieRepositories trendingMovieRepositories;
+  final TrendingMovieRepositories repository;
 
-  GetTrendingMovieUseCase({required this.trendingMovieRepositories});
+  GetTrendingMovieUseCase({required this.repository});
 
-  Future<Either<Failure, TrendingMovieEntity>> call() {
-    return trendingMovieRepositories.getTrendingMovie();
+  Future<Either<Failure, List<TrendingMovieEntity>>> call() {
+    return repository.getTrendingMovie();
   }
-
-  // link between presentation  layer and domain layer
 }

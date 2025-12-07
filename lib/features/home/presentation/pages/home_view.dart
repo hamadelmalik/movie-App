@@ -1,125 +1,99 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/core/constants/app_assets.dart';
-import 'package:movie_app/core/theme/app_palette.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/core/services/service_locator.dart';
 import 'package:movie_app/features/home/domain/entity/action_entity.dart';
-import 'package:movie_app/features/home/domain/entity/trending_entity.dart';
+import 'package:movie_app/features/home/presentation/cubit/trending_cubit.dart';
+import 'package:movie_app/features/home/presentation/cubit/trending_sate.dart'
+    hide TrendingCubit;
 import 'package:movie_app/features/home/presentation/pages/widgets/action_movies_card.dart';
 import 'package:movie_app/features/home/presentation/pages/widgets/available_movie_card.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  List<TrendingMovieEntity> availableMovie = [
-    TrendingMovieEntity(
-      id: 1,
-      title: "Captain America",
-      posterPath: 'assets/images/captain.jpg',
-      rating: 7.7,
-      releaseDate: "2011-07-22",
-    ),
-    TrendingMovieEntity(
-      id: 2,
-      title: "Black Panther",
-      posterPath: 'assets/images/black.png',
-      rating: 8.3,
-      releaseDate: "2018-02-16",
-    ),
-    TrendingMovieEntity(
-      id: 2,
-      title: "The Dark",
-      posterPath: 'assets/images/dark.png',
-      rating: 8.3,
-      releaseDate: "2018-02-16",
-    ),
-  ];
-
-  final List<ActionMovieEntity> actionMovies = [
-    ActionMovieEntity(
-      title: 'Captain America',
-      assetPath: AppAssets.captain,
-      rating: 7.7,
-    ),
-    ActionMovieEntity(title: 'black', assetPath: AppAssets.black, rating: 8.3),
-    ActionMovieEntity(
-      title: 'The Dark ',
-      assetPath: AppAssets.dark,
-      rating: 6.3,
-    ),
-
-    // Add more movies here
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        backgroundColor: AppPalette.gradient2,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(AppAssets.Available, width: screenWidth * 0.7),
-
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 351,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return AvailableMovieCard(
-                    trendingMovieEntity: availableMovie[index],
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(width: 10);
-                },
-                itemCount: availableMovie.length,
-              ),
-            ),
-            //  Image.asset(AppAssets.watch, width: screenWidth * 0.7),
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Action",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
+    final actionMovies = [
+      ActionMovieEntity(title: 'Captain America',
+          assetPath: 'assets/images/captain.jpg',
+          rating: 7.7),
+      ActionMovieEntity(title: ' The Dark Knight',
+          assetPath: 'assets/images/dark.png',
+          rating: 8.3),
+      ActionMovieEntity(title: 'Black Panther',
+          assetPath: 'assets/images/black.png',
+          rating: 6.3),
+    ];
+    return BlocProvider(
+      create: (_) => sl<TrendingCubit>()..fetchTrendingMovies(),
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+            title: const Text('Home'), backgroundColor: Colors.deepPurple),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              const Text("Trending Movies", style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold)),
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 270,
+                child: BlocBuilder<TrendingCubit, TrendingState>(
+                  builder: (context, state) {
+                    if (state is GetTrendingLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is GetTrendingFailure) {
+                      return Center(child: Text(state.errMessage,
+                          style: const TextStyle(color: Colors.red)));
+                    } else if (state is GetTrendingSuccessfully) {
+                      final movies = state.trendingMovies;
+                      return ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: movies.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: 12),
+                        itemBuilder: (context, index) {
+                          return AvailableMovieCard(
+                              trendingMovieEntity: movies[index]);
+                        },
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "See More",
-                    style: TextStyle(color: AppPalette.gradient2, fontSize: 22),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 220, // ارتفاع ثابت علشان البوسترات
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal, // هنا التغيير الأساسي
-                itemCount: actionMovies.length,
-                itemBuilder: (context, index) {
-                  return ActionMoviesCard(
-                    actionMovieEntity: actionMovies[index],
-                  );
-                },
               ),
-            ),
-          ],
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Action",
+                      style: TextStyle(color: Colors.white, fontSize: 22)),
+                  TextButton(onPressed: () {},
+                      child: const Text("See More", style: TextStyle(
+                          color: Colors.deepPurple, fontSize: 22))),
+                ],
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 220,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: actionMovies.length,
+                  itemBuilder: (context, index) {
+                    return ActionMoviesCard(
+                        actionMovieEntity: actionMovies[index]);
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

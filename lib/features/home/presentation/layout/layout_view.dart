@@ -14,11 +14,10 @@ class LayoutView extends StatefulWidget {
 
 class _LayoutViewState extends State<LayoutView> {
   final List<Widget>_page=[
-
-    HomeView(),
-    BrowserView(),
-    SearchView(),
-    ProfileView(),
+    const HomeView(),
+    const BrowserView(),
+    const SearchView(),
+    const ProfileView(),
   ];
   int _currentIndex = 0;
 
