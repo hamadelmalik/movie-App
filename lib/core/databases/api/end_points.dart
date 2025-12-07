@@ -4,6 +4,5 @@ class EndPoints {
   static const String baserUrl = "https://api.themoviedb.org/3/";
  // static const String template = "template/";
   static const String movie = "movie/";
-
-
+  static const String trending = " /trending/all/day";
 }
