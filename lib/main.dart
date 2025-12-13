@@ -4,6 +4,7 @@ import 'package:movie_app/core/route/app_route.dart';
 import 'package:movie_app/core/route/page_route_name.dart';
 import 'package:movie_app/core/services/service_locator.dart';
 import 'package:movie_app/core/theme/theme.dart';
+import 'package:movie_app/features/home/presentation/cubit/action_movie_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/trending_cubit.dart';
 
 void main() async {
@@ -13,7 +14,12 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<TrendingCubit>(create: (context) => sl<TrendingCubit>()),
+        BlocProvider(
+          create: (_) => sl<TrendingCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => sl<ActionCubit>(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -32,7 +38,6 @@ class MyApp extends StatelessWidget {
 
       // ✅ HomeView تحت الـ Provider
       initialRoute: PageRouteName.layoutView,
-
       onGenerateRoute: AppRoute.onGenerateRoute,
     );
   }

@@ -1,7 +1,9 @@
 class ActionMovieEntity{
+  final int id;
   final String title;
-  final String assetPath;
+  final String posterPath;
   final double rating;
 
-  ActionMovieEntity({required this.title, required this.assetPath, required this.rating});
+  ActionMovieEntity(
+      {required this.id, required this.title, required this.posterPath, required this.rating});
 }
