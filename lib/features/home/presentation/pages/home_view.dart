@@ -8,7 +8,6 @@ import 'package:movie_app/features/home/presentation/cubit/trending_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/trending_sate.dart'
     hide TrendingCubit;
 import 'package:movie_app/features/home/presentation/pages/widgets/action_movies_card.dart';
-import 'package:movie_app/features/home/presentation/pages/widgets/available_movie_card.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -64,25 +63,24 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(height: 12),
             SizedBox(
               height: 270,
-              child: BlocBuilder<TrendingCubit, TrendingState>(
+              child: BlocBuilder<ActionCubit, ActionState>(
                 builder: (context, state) {
-                  if (state is GetTrendingLoading) {
+                  if (state is ActionLoading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state is GetTrendingFailure) {
+                  } else if (state is ActionFailure) {
                     return Center(
-                      child: Text(
-                          state.errMessage, style: const TextStyle(color: Colors
-                          .red)),
+                      child: Text(state.errMessage,
+                          style: const TextStyle(color: Colors.red)),
                     );
-                  } else if (state is GetTrendingSuccessfully) {
-                    final trendingMovies = state.trendingMovies;
+                  } else if (state is ActionSuccess) {
+                    final actionMovies = state.actionMovies;
                     return ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: trendingMovies.length,
+                      itemCount: actionMovies.length,
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) =>
-                          AvailableMovieCard(
-                            trendingMovieEntity: trendingMovies[index],
+                          ActionMoviesCard(
+                            actionMovieEntity: actionMovies[index],
                           ),
                     );
                   }
@@ -90,6 +88,7 @@ class _HomeViewState extends State<HomeView> {
                 },
               ),
             ),
+
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -13,10 +13,10 @@ class LayoutView extends StatefulWidget {
 }
 
 class _LayoutViewState extends State<LayoutView> {
-  final List<Widget>_page=[
+  final List<Widget> _page = [
     const HomeView(),
-    const BrowserView(),
     const SearchView(),
+    BrowserView(),
     const ProfileView(),
   ];
   int _currentIndex = 0;
@@ -24,38 +24,38 @@ class _LayoutViewState extends State<LayoutView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     body: _page[_currentIndex] ,
+      body: _page[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      onTap: (int index) {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
-      currentIndex: _currentIndex,
-      items: [
-        BottomNavigationBarItem(
-          icon: Image.asset(AppAssets.home, width: 25),
-          activeIcon: Image.asset(AppAssets.homeActive, width: 25),
-          label: "home",
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(AppAssets.search, width: 25),
-          activeIcon: Image.asset(AppAssets.searchActive, width: 25),
-          label: "search",
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(AppAssets.browser, width: 25),
-          activeIcon: Image.asset(AppAssets.browserActive, width: 25),
-          label: "Browser",
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(AppAssets.profile, width: 25),
-          activeIcon: Image.asset(AppAssets.profileActive, width: 25),
-          label: "Profile",
-        ),
-      ],
-    ),
+        type: BottomNavigationBarType.fixed,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Image.asset(AppAssets.home, width: 25),
+            activeIcon: Image.asset(AppAssets.homeActive, width: 25),
+            label: "home",
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(AppAssets.search, width: 25),
+            activeIcon: Image.asset(AppAssets.searchActive, width: 25),
+            label: "search",
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(AppAssets.browser, width: 25),
+            activeIcon: Image.asset(AppAssets.browserActive, width: 25),
+            label: "Browser",
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(AppAssets.profile, width: 25),
+            activeIcon: Image.asset(AppAssets.profileActive, width: 25),
+            label: "Profile",
+          ),
+        ],
+      ),
     );
   }
 }
