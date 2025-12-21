@@ -6,6 +6,7 @@ import 'package:movie_app/core/services/service_locator.dart';
 import 'package:movie_app/core/theme/theme.dart';
 import 'package:movie_app/features/home/presentation/cubit/action_movie_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/genres_cubit.dart';
+import 'package:movie_app/features/home/presentation/cubit/movie_cubit.dart';
 import 'package:movie_app/features/home/presentation/cubit/trending_cubit.dart';
 
 void main() async {
@@ -18,6 +19,7 @@ void main() async {
         BlocProvider(create: (_) => sl<TrendingCubit>()),
         BlocProvider(create: (_) => sl<ActionCubit>()),
         BlocProvider(create: (_) => sl<GenresCubit>()),
+        BlocProvider(create: (_) => sl<MovieCubit>()),
       ],
       child: const MyApp(),
     ),

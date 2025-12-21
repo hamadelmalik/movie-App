@@ -5,6 +5,5 @@ class MovieDetailsParams {
 
 class GenresParams {
   final int id;
-
   GenresParams({required this.id});
 }

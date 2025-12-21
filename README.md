@@ -23,3 +23,26 @@ A Flutter application for browsing movies using the **TMDb API**, built with Cle
 ---
 
 ## 📂 Project Structure
+lib/
+├── core/
+│   ├── connection/       # Network info & internet checker
+│   ├── constants/        # App assets, colors, endpoints
+│   ├── route/            # App routing
+│   ├── services/         # Service locator / DI
+│   └── theme/            # App theme
+├── features/
+│   └── home/
+│       ├── data/
+│       │   ├── datasource/   # Remote data sources
+│       │   └── repositories/ # Implementations
+│       ├── domain/
+│       │   ├── entity/       # Models (Trending, Action)
+│       │   ├── repositories/ # Abstract contracts
+│       │   └── usecase/      # Use cases
+│       └── presentation/
+│           ├── cubit/       # BLoC / Cubit state management
+│           └── pages/
+│               ├── widgets/ # Reusable UI components
+│               └── home_view.dart
+└── main.dart
+
