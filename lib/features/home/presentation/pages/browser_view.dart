@@ -29,9 +29,9 @@ class _BrowserViewState extends State<BrowserView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GenresCubit, GenresState>(builder: (context, state) {
-      if (state is GenresLoading)
-        return const Center(child: CircularProgressIndicator());
-      if (state is GenresError) return Center(child: Text(state.message));
+      if (state is GenresLoading){
+        return  Center(child: CircularProgressIndicator());}
+      if (state is GenresError) {return Center(child: Text(state.message));}
       if (state is GenresSuccess) {
         final genres = state.genres;
         return DefaultTabController(
@@ -72,10 +72,10 @@ class _BrowserViewState extends State<BrowserView> {
                           // fetch for this genre
                           context.read<MovieCubit>().fetchMoviesByGenre(g.id);
 
-                          if (state is MovieLoading) return const Center(
-                              child: CircularProgressIndicator());
-                          if (state is MovieError)
-                            return Center(child: Text(state.message));
+                          if (state is MovieLoading) {return const Center(
+                              child: CircularProgressIndicator());}
+                          if (state is MovieError){
+                            return Center(child: Text(state.message));}
                           if (state is MovieSuccess) {
                             final movies = state.movies;
                             return GridView.builder(
