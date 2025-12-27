@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,14 +16,26 @@ class BrowserView extends StatefulWidget {
 
 class _BrowserViewState extends State<BrowserView> {
   @override
+
   void initState() {
     super.initState();
+    final movieCubit = context.read<MovieCubit>();
     final genresCubit = context.read<GenresCubit>();
+
     if (genresCubit.state is! GenresSuccess) {
       genresCubit.fetchGenres();
-      log("Fetching genres from API...");
     }
+
+    // بعد جلب الـ genres، يمكن fetch لكل genre
+    genresCubit.stream.listen((state) {
+      if (state is GenresSuccess) {
+        for (var g in state.genres) {
+          movieCubit.fetchMoviesByGenre(g.id);
+        }
+      }
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,18 +80,13 @@ class _BrowserViewState extends State<BrowserView> {
                     children: genres.map((g) {
                       return BlocBuilder<MovieCubit, MovieState>(
                         builder: (context, state) {
-                          // fetch for this genre
-                          context.read<MovieCubit>().fetchMoviesByGenre(g.id);
-
-                          if (state is MovieLoading) {return const Center(
-                              child: CircularProgressIndicator());}
-                          if (state is MovieError){
-                            return Center(child: Text(state.message));}
+                          if (state is MovieLoading) return const Center(child: CircularProgressIndicator());
+                          if (state is MovieError) return Center(child: Text(state.message));
                           if (state is MovieSuccess) {
-                            final movies = state.movies;
+                            final movieByGenres = state.moviesByEndpoint['genre_${g.id}'] ?? [];
                             return GridView.builder(
                               padding: const EdgeInsets.all(16),
-                              itemCount: movies.length,
+                              itemCount: movieByGenres.length,
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 16,
@@ -88,12 +94,11 @@ class _BrowserViewState extends State<BrowserView> {
                                 childAspectRatio: 0.7,
                               ),
                               itemBuilder: (context, index) {
-                                final movie = movies[index];
+                                final movie = movieByGenres[index];
                                 return ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: Image.network(
-                                    "https://image.tmdb.org/t/p/w500${movie
-                                        .posterPath}",
+                                    "https://image.tmdb.org/t/p/w500${movie.posterPath}",
                                     fit: BoxFit.cover,
                                   ),
                                 );
@@ -105,7 +110,8 @@ class _BrowserViewState extends State<BrowserView> {
                       );
                     }).toList(),
                   ),
-                ),
+                )
+                ,
               ],
             ),
           ),

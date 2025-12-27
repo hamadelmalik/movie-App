@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/features/home/domain/entity/trending_entity.dart';
+import 'package:movie_app/features/home/domain/entity/movie_entity.dart';
 
 class AvailableMovieCard extends StatelessWidget {
-  final TrendingMovieEntity trendingMovieEntity;
+  final MovieEntity movieEntity;
 
   const AvailableMovieCard({
     super.key,
-    required this.trendingMovieEntity,
+    required this.movieEntity,
   });
 
   @override
   Widget build(BuildContext context) {
     final imageUrl =
-        'https://image.tmdb.org/t/p/w500${trendingMovieEntity.posterPath}';
+        'https://image.tmdb.org/t/p/w500${movieEntity.posterPath}';
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -62,13 +62,15 @@ class AvailableMovieCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    trendingMovieEntity.rating.toStringAsFixed(1),
+                    movieEntity.rating.toStringAsFixed(1),
+
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
                   const SizedBox(width: 4),
                   const Icon(Icons.star, color: Colors.yellow, size: 18),
                 ],

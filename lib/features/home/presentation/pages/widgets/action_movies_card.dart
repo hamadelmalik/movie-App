@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/features/home/domain/entity/action_entity.dart';
+import 'package:movie_app/features/home/domain/entity/movie_entity.dart';
 
 class ActionMoviesCard extends StatelessWidget {
-  final ActionMovieEntity actionMovieEntity;
+  final MovieEntity movieEntity;
 
-  const ActionMoviesCard({super.key, required this.actionMovieEntity});
+  const ActionMoviesCard({super.key, required this.movieEntity});
 
   @override
   Widget build(BuildContext context) {
     final imageUrl =
-        'https://image.tmdb.org/t/p/w500${actionMovieEntity.posterPath}';
+        'https://image.tmdb.org/t/p/w500${movieEntity.posterPath}';
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: actionMovieEntity.posterPath.isNotEmpty
+            child: movieEntity.posterPath.isNotEmpty
                 ? Image.network(
                     imageUrl,
                     width: 140,
@@ -52,7 +53,7 @@ class ActionMoviesCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            actionMovieEntity.rating.toStringAsFixed(1),
+            movieEntity.rating.toStringAsFixed(1),
             style: const TextStyle(color: Colors.white, fontSize: 14),
           ),
           const SizedBox(width: 4),

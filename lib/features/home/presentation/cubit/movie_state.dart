@@ -7,9 +7,13 @@ class MovieInitial extends MovieState {}
 class MovieLoading extends MovieState {}
 
 class MovieSuccess extends MovieState {
-  final List<MovieEntity> movies;
+  final Map<String, List<MovieEntity>> moviesByEndpoint;
+  MovieSuccess({required this.moviesByEndpoint});
+}
 
-  MovieSuccess({required this.movies});
+class MovieByGenreSuccess extends MovieState {
+  final Map<int, List<MovieEntity>> moviesByGenre;
+  MovieByGenreSuccess({required this.moviesByGenre});
 }
 
 class MovieError extends MovieState {
